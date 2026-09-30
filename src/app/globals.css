@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 33% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 199 89% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 94%;
+    --secondary-foreground: 222 25% 18%;
+    --muted: 210 22% 94%;
+    --muted-foreground: 215 16% 46%;
+    --accent: 160 84% 32%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 16% 88%;
+    --input: 214 16% 88%;
+    --ring: 199 89% 36%;
+    --warning: 38 92% 50%;
+    --radius: 0.6rem;
+    --sidebar: 222 47% 11%;
+    --sidebar-foreground: 210 20% 92%;
+    --sidebar-border: 222 30% 20%;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 20% 92%;
+    --card: 222 41% 12%;
+    --card-foreground: 210 20% 92%;
+    --popover: 222 41% 11%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 25% 18%;
+    --secondary-foreground: 210 20% 92%;
+    --muted: 222 25% 16%;
+    --muted-foreground: 215 20% 58%;
+    --accent: 160 84% 38%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 25% 20%;
+    --input: 222 25% 20%;
+    --ring: 199 89% 48%;
+    --warning: 38 92% 60%;
+    --sidebar: 222 45% 9%;
+    --sidebar-foreground: 210 20% 92%;
+    --sidebar-border: 222 25% 18%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .maplibregl-ctrl-attrib {
+    font-size: 10px;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+}

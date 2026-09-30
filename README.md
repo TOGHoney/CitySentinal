@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CitySentinel
 
-## Getting Started
+**AI-Powered Urban Intelligence for city fleets** — a client-side web application that turns bus-mounted camera feeds
+into actionable urban-intelligence dashboards for a single authority user.
 
-First, run the development server:
+Built with **Next.js 14 (App Router)**, **Tailwind CSS + shadcn/ui**, **Zustand**, **Recharts**, **MapLibre GL + GeoApify** and a
+fully mock data layer so every screen works without a backend.
+
+## Getting started
 
 ```bash
+npm install
+cp .env.local.example .env.local   # add a GeoApify API key if you want the interactive map
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Sign in with username `authority.admin` and any password of 6+ characters.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Variable                  | Purpose                                                         | Default in mock mode |
+| ------------------------- | --------------------------------------------------------------- | -------------------- |
+| `NEXT_PUBLIC_API_BASE_URL`| Base URL of the optional real API                               | —                    |
+| `NEXT_PUBLIC_WS_URL`      | WebSocket URL for live fleet events                             | —                    |
+| `NEXT_PUBLIC_GEOAPIFY_API_KEY`| GeoApify API key for MapLibre basemap tiles (optional)      | —                    |
+| `NEXT_PUBLIC_USE_MOCKS`   | Set to `true` to serve UI from the deterministic mock layer     | `true`               |
 
-## Learn More
+If `NEXT_PUBLIC_GEOAPIFY_API_KEY` is unset, the map widgets render an explanatory placeholder — all dashboards still
+work against the mock data layer. Set it to enable interactive maps, bus markers, defect markers and the congestion
+heatmap.
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Live fleet dashboard** — bus positions, status (normal / minor / critical), live alert panel, 4-camera feed per bus
+  with speed & route analytics.
+- **Traffic violations & E-Challan references** — ANPR detections with snapshot + plate crop evidence. Generating a
+  reference stores **only** `Application ID, plate, location, time, violation type, bus ID, confidence` — no owner or
+  registration data lives in this platform.
+- **Road defects module** — geo-tagged potholes / damaged roads / missing signboards / waterlogging with confidence
+  scores, resolve flow and CSV/PDF export.
+- **Congestion analytics** — zone heatmap, hourly volume + speed charts, route congestion table, origin–destination
+  flows, PDF report export.
+- **Investigation** — draw a geo-fence on the map, search vehicles within a time window, play dash-cam HLS feeds, and
+  build a case file (clip requests return an Application ID immediately).
+- **Profile & settings** — authority account, fine structure, AI confidence thresholds, change password.
+- Light/dark themes, toast + confirm dialog kit, CSV/PDF export via `jsPDF`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Running a production build
 
-## Deploy on Vercel
+```bash
+npm run build
+npm run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `npm run dev` — development server
+- `npm run build` — production build (type-checks + lints)
+- `npm run start` — start the production server
+- `npx tsc --noEmit` — full type check
+
+## Project structure
+
+```
+src/
+  app/            # routes: (auth), (dashboard) + middleware
+  components/     # ui primitives, layout, dashboard, maps, per-module widgets
+  hooks/          # useAuth, useFleet, useViolations, useDefects, useAnalytics,
+                  # useInvestigation, useNotifications, useMap, useWebSocket
+  lib/            # api (axios + mock dispatch), auth, websocket, toast, export (PDF/CSV),
+                  # geojson, constants, utils
+  mocks/          # deterministic mock API + seeded data
+  store/          # zustand stores (auth, fleet, violations, defects, notifications, investigation)
+  types/          # domain types
+```
+
+## License
+
+See `LICENSE` (if present).
