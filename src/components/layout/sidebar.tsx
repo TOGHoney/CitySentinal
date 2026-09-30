@@ -18,6 +18,7 @@ import { COMPANY_NAME, APP_TAGLINE } from "@/lib/constants";
 import { Separator } from "@/components/ui/separator";
 
 const NAV_ITEMS = [
+  { href: "/demo", label: "Live demo", icon: Radar},
   { href: "/dashboard", label: "Live Fleet", icon: Radar },
   { href: "/violations", label: "Violations", icon: AlertOctagon },
   { href: "/defects", label: "Road Defects", icon: Route },
