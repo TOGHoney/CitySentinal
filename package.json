@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently -n frontend,backend -c blue,green \"next dev\" \"npm:dev:backend\"",
+    "dev:frontend": "next dev",
+    "dev:backend": "cd backend && venv\\Scripts\\uvicorn main:app --reload --port 8000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -47,6 +49,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "concurrently": "^10.0.5",
     "eslint": "^8",
     "eslint-config-next": "^14.2.35",
     "postcss": "^8",
