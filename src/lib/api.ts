@@ -22,7 +22,10 @@ import type { AnalyticsData, AnalyticsRange } from "@/types/analytics";
 import type { AlertThreshold } from "@/types/fleet";
 import type { BusFootageResult, FootageClipRequest, ClipRequestResponse, InvestigationSearchParams } from "@/types/investigation";
 import type { AppNotification } from "@/types/notification";
+import type { ModelInfo, ImagePredictionResponse } from "@/types/ai";
 import { getAccessToken, getRefreshToken, setSessionTokens, clearSession, decodeMockToken } from "./auth";
+
+const AI_API_URL = process.env.NEXT_PUBLIC_AI_API_URL ?? "http://localhost:8000";
 
 const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS !== "false";
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3001/api";
@@ -228,5 +231,29 @@ export const api = {
   },
   async markAllNotificationsRead(): Promise<{ success: boolean }> {
     return raw("POST", "/notifications/read-all");
+  },
+
+  // AI Inference
+  async getModels(): Promise<ModelInfo[]> {
+    const response = await fetch(`${AI_API_URL}/api/models`);
+    if (!response.ok) throw new ApiError(response.status, "Failed to load models");
+    return response.json();
+  },
+
+  async predictImage(file: File, model: string): Promise<ImagePredictionResponse> {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("model", model);
+
+    const response = await fetch(`${AI_API_URL}/api/predict/image`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new ApiError(response.status, data.detail || "Inference failed");
+    }
+    return data;
   },
 };

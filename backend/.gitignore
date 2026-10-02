@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.env
+
+# Model files (too large for git)
+*.pt
+*.pth
+*.onnx
+
+# Output files
+outputs/
+temp/
+
+# IDE
+.vscode/
+.idea/

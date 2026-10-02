@@ -7,8 +7,6 @@ import { MapContext } from "@/hooks/useMap";
 import { cn } from "@/lib/utils";
 import { fetchGeoapifyStyle, geoapifyApiKey, type GeoapifyStyleKey } from "@/lib/geoapify";
 
-maplibregl.setWorkerUrl(new URL("maplibre-gl/dist/maplibre-gl-csp-worker.js", import.meta.url).toString());
-
 const DEFAULT_CENTER: [number, number] = [76.9558321, 11.0168445];
 const DEFAULT_ZOOM = 12;
 
