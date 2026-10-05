@@ -3,7 +3,10 @@ fastapi>=0.110.0
 uvicorn[standard]>=0.29.0
 torch>=2.2.0
 torchvision>=0.17.0
-ultralytics>=8.2.0
+# Headless build of Ultralytics: provides the `ultralytics` package but depends
+# on opencv-python-headless (instead of opencv-python), so regular opencv-python
+# (which needs libxcb/libGL) is never pulled into the serverless deployment.
+ultralytics-opencv-headless>=8.4.171
 python-multipart>=0.0.9
 opencv-python-headless>=4.9.0
 numpy>=1.26.0
