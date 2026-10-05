@@ -3,7 +3,10 @@ fastapi>=0.110.0
 uvicorn[standard]>=0.29.0
 torch>=2.2.0
 torchvision>=0.17.0
-ultralytics>=8.2.0
+# Headless Ultralytics build: provides the `ultralytics` package and depends on
+# opencv-python-headless (NOT opencv-python), so regular OpenCV and its
+# libxcb/libGL system deps are never installed on Render.
+ultralytics-opencv-headless>=8.4.171
 python-multipart>=0.0.9
 opencv-python-headless>=4.9.0
 numpy>=1.26.0

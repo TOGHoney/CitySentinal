@@ -25,13 +25,11 @@ import type { AppNotification } from "@/types/notification";
 import type { ModelInfo, ImagePredictionResponse } from "@/types/ai";
 import { getAccessToken, getRefreshToken, setSessionTokens, clearSession, decodeMockToken } from "./auth";
 
-// In production the FastAPI service is served from the same origin via the
-// /api/* and /outputs/* rewrites in vercel.json, so AI requests must be
-// same-origin relative URLs instead of localhost:8000.
-// Locally (next dev without NEXT_PUBLIC_AI_API_URL) fall back to localhost:8000.
+// The AI backend (FastAPI/YOLO) is hosted on Render, so the browser calls it
+// directly via NEXT_PUBLIC_AI_API_URL. Locally (next dev without the env var)
+// fall back to the local backend on port 8000.
 const AI_API_URL =
-  process.env.NEXT_PUBLIC_AI_API_URL ??
-  (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000");
+  process.env.NEXT_PUBLIC_AI_API_URL ?? "http://localhost:8000";
 
 export { AI_API_URL };
 

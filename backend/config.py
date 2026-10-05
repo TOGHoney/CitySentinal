@@ -6,8 +6,10 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent
 
-# Vercel serverless functions have a read-only filesystem except /tmp.
-# Keep models bundled with the code, but write outputs/temp to /tmp there.
+# On truly serverless filesystems (read-only except /tmp), keep outputs/temp in
+# /tmp. On Render and locally the code directory is writable, so paths default
+# to BASE_DIR; the filesystem on Render is ephemeral, so do not rely on
+# persistence for outputs/temp.
 IS_SERVERLESS = bool(os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"))
 STATE_DIR = Path(os.getenv("STATE_DIRECTORY", "/tmp/citysentinal" if IS_SERVERLESS else str(BASE_DIR)))
 
