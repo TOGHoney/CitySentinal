@@ -5,10 +5,8 @@ import { Upload, Image as ImageIcon, AlertCircle, CheckCircle2, Loader2, X } fro
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { api, ApiError } from "@/lib/api";
+import { api, ApiError, AI_API_URL } from "@/lib/api";
 import type { ModelInfo, ImagePredictionResponse } from "@/types/ai";
-
-const AI_API_URL = process.env.NEXT_PUBLIC_AI_API_URL ?? "http://localhost:8000";
 
 export default function DemoPage() {
   const [models, setModels] = useState<ModelInfo[]>([]);

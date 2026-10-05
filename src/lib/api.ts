@@ -25,7 +25,15 @@ import type { AppNotification } from "@/types/notification";
 import type { ModelInfo, ImagePredictionResponse } from "@/types/ai";
 import { getAccessToken, getRefreshToken, setSessionTokens, clearSession, decodeMockToken } from "./auth";
 
-const AI_API_URL = process.env.NEXT_PUBLIC_AI_API_URL ?? "http://localhost:8000";
+// In production the FastAPI service is served from the same origin via the
+// /api/* and /outputs/* rewrites in vercel.json, so AI requests must be
+// same-origin relative URLs instead of localhost:8000.
+// Locally (next dev without NEXT_PUBLIC_AI_API_URL) fall back to localhost:8000.
+const AI_API_URL =
+  process.env.NEXT_PUBLIC_AI_API_URL ??
+  (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000");
+
+export { AI_API_URL };
 
 const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS !== "false";
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3001/api";
