@@ -11,4 +11,4 @@ services:
       - key: PYTHON_VERSION
         value: "3.12.0"
       - key: CORS_ORIGINS
-        value: https://city-sentinal.vercel.app/demo
+        value: https://city-sentinal.vercel.app
