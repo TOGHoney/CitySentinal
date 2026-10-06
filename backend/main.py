@@ -1,9 +1,14 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from config import CORS_ORIGINS, CORS_ORIGIN_REGEX, OUTPUT_DIRECTORY
 from api import health, inference, files
+
+# Production (Render) injects PORT; local development defaults to 8000.
+PORT = os.getenv("PORT", "8000")
 
 app = FastAPI(
     title="CitySentinal AI Backend",
@@ -30,3 +35,9 @@ app.mount("/outputs", StaticFiles(directory=OUTPUT_DIRECTORY), name="outputs")
 @app.get("/")
 async def root():
     return {"message": "CitySentinal AI Backend is running. Visit /docs for API documentation."}
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run("main:app", host="0.0.0.0", port=int(PORT), reload=False)
