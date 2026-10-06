@@ -97,6 +97,7 @@ def predict_image(
         # Save annotated image
         output_filename = generate_unique_filename(file.filename)
         output_path = Path(OUTPUT_DIRECTORY) / "images" / output_filename
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         image_service.save_annotated_image(result, str(output_path))
 
         processing_time = (time.time() - start_time) * 1000
