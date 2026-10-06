@@ -88,6 +88,13 @@ class ModelManager:
         try:
             from ultralytics import YOLO
 
+            # Evict old models to prevent OOM errors on constrained servers
+            if len(self._cache) > 0:
+                logger.info("Clearing model cache to free up memory.")
+                self._cache.clear()
+                import gc
+                gc.collect()
+
             logger.info(f"Loading YOLO model: {model_path}")
             model = YOLO(str(model_path))
             self._cache[model_id] = model
