@@ -1,5 +1,6 @@
 "use client";
 
+import { getViolationImage, getPlateImage } from "@/mocks/data/violationImages";
 import { useCallback, useState } from "react";
 import { useDebouncedValue } from "@/lib/utils";
 import { api } from "@/lib/api";
@@ -86,10 +87,9 @@ export function useViolations() {
         type,
         busId: "BUS-03-2",
         vehicleSnapshot: {
-          imageUrl: `https://picsum.photos/seed/live-${Date.now()}/480/270`,
-          plateCropUrl: `https://picsum.photos/seed/liveplate-${Date.now()}/240/120`,
-        },
-        anpr: {
+        imageUrl: getViolationImage(type),
+        plateCropUrl: getPlateImage(),
+        },anpr: {
           plateNumber: `TN ${["38", "20", "31"][Math.floor(Math.random() * 3)]} ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}${String.fromCharCode(65 + Math.floor(Math.random() * 26))} ${Math.floor(1000 + Math.random() * 9000)}`,
           confidence: Math.round(78 + Math.random() * 21),
         },
