@@ -18,6 +18,7 @@ export default function DemoPage() {
   const [result, setResult] = useState<ImagePredictionResponse | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
 
   // Fetch models on mount
   useEffect(() => {
@@ -29,6 +30,15 @@ export default function DemoPage() {
       })
       .catch(() => setError("Failed to load models. Is the backend running?"));
   }, []);
+  useEffect(() => {
+  if (result) {
+    resultRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+}, [result]);
+
 
   const handleFileSelect = useCallback((file: File) => {
     const validTypes = ["image/jpeg", "image/png", "image/webp"];
@@ -214,7 +224,9 @@ export default function DemoPage() {
 
       {/* Results */}
       {result && (
-        <div className="grid gap-6 md:grid-cols-2">
+        <div
+        ref={resultRef}
+        className="grid gap-6 scroll-mt-6 md:grid-cols-2">
           {/* Annotated Image */}
           <Card>
             <CardHeader>
