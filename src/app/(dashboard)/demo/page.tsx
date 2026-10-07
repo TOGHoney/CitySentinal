@@ -204,11 +204,20 @@ export default function DemoPage() {
               )}
             </Button>
             {selectedFile && (
-              <Button variant="outline" onClick={clearAll}>
+              <Button variant="outline" onClick={clearAll} disabled={loading}>
                 Clear
               </Button>
             )}
           </div>
+
+          {loading && (
+            <div className="flex items-center gap-2.5 rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm text-muted-foreground">
+              <Loader2 className="h-4 w-4 shrink-0 animate-spin text-primary" />
+              <span>
+                Wait about 1 minute for the response(This slow outputs are because of the slow computational power of render free tier for AI models)
+              </span>
+            </div>
+          )}
         </CardContent>
       </Card>
 
