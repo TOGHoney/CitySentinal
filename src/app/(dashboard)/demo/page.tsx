@@ -189,16 +189,16 @@ export default function DemoPage() {
             <Button
               onClick={handleAnalyze}
               disabled={!selectedFile || !selectedModel || loading}
-              className="flex-1"
+              className="flex-1 h-auto min-h-10 py-2 whitespace-normal text-center"
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Analyzing...
+                  <Loader2 className="mr-2 h-4 w-4 shrink-0 animate-spin" />
+                  <span>Wait about 1 minute for the response(This slow outputs are because of the slow computational power of render free tier for AI models)</span>
                 </>
               ) : (
                 <>
-                  <ImageIcon className="mr-2 h-4 w-4" />
+                  <ImageIcon className="mr-2 h-4 w-4 shrink-0" />
                   Analyze
                 </>
               )}
@@ -209,15 +209,6 @@ export default function DemoPage() {
               </Button>
             )}
           </div>
-
-          {loading && (
-            <div className="flex items-center gap-2.5 rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 shrink-0 animate-spin text-primary" />
-              <span>
-                Wait about 1 minute for the response(This slow outputs are because of the slow computational power of render free tier for AI models)
-              </span>
-            </div>
-          )}
         </CardContent>
       </Card>
 
